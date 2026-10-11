@@ -58,7 +58,6 @@ def summarize_history():
     summary = resp.choices[0].message.content
 
     messages = [
-        system,
         {"role": "system", "content": f"【之前对话的摘要】{summary}"},
     ] + recent_dialog
 
