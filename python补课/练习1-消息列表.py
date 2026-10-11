@@ -15,7 +15,7 @@ messages = []
 # 要求：往 messages 末尾加 {"role": "user", "content": "你好"}
 # 提示：messages.append(...)
 # 你的代码 ↓
-
+messages.append({"role":"user","content":"你好"})
 
 
 
@@ -28,7 +28,7 @@ print("✅ 检查 1 通过：列表里有 1 条 user 消息")
 # ---------- TODO 2：再加一条 assistant 消息 ----------
 # 要求：加 {"role": "assistant", "content": "你好，有什么可以帮你？"}
 # 你的代码 ↓
-
+messages.append({"role": "assistant", "content": "你好，有什么可以帮你？"})
 
 
 
@@ -41,7 +41,8 @@ print("✅ 检查 2 通过：现在有 2 条消息")
 # 要求：把最后一条消息的 content 存进 last_content 变量
 # 提示：messages[-1] 是最后一条，它是个字典，再用 ["content"] 取值
 # 你的代码 ↓
-
+last_content=messages[-1]["content"]
+print(f"{last_content}")
 
 
 
@@ -54,8 +55,8 @@ print("✅ 检查 3 通过：成功取到最后一条内容")
 # 要求：格式是   [0] user: 你好
 # 提示：for i, m in enumerate(messages):  然后 f-string
 # 你的代码 ↓
-
-
+for i,m in enumerate(messages):
+   print(f"[{i}] {m['role']}: {m['content']}")
 
 
 # 检查 4（人工看，没有 assert）
@@ -65,8 +66,8 @@ print("✅ 检查 4：上面应该有两行，编号 0 和 1，角色分别是 u
 # ---------- TODO 5（进阶）：删掉最后一条，再打印长度 ----------
 # 要求：用 pop() 删掉最后一条，然后打印剩下的条数
 # 你的代码 ↓
-
-
+messages.pop()
+print(len(messages))
 
 
 # 检查 5
