@@ -32,7 +32,7 @@ def summarize_history():
     system = messages[0]                              
     dialog = messages[1:]                                                        
     keep = KEEP_RECENT * 2
-    if len(dialog) <= keep + 2:
+    if len(dialog) <= keep + 12:
         return
     old_dialog=dialog[:-keep]
     recent_dialog=dialog[-keep:]
@@ -56,7 +56,6 @@ def summarize_history():
     )
         summary = resp.choices[0].message.content
     except Exception:
-        messages=[messages[0]] + recent_dialog
         return
     
     messages = [
@@ -94,7 +93,7 @@ if __name__ == "__main__":
 
         reply, error = chat(user_input)
         if error:
-            print(f"\n️  请求失败：{error}\n")              
+            print(f"\n️请求失败：{error}\n") 
         else:
             print(f"\nAI > {reply}")
             print(f"\n    (历史 {len(messages)} 条)\n")
