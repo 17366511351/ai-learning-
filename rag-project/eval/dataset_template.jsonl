@@ -1,0 +1,3 @@
+{"id": 1, "question": "（在这里写一个你语料里能找到答案的真实问题）", "gold_answer": "标准答案，自己写，要准确", "source_doc": "答案出自哪个文档/页码"}
+{"id": 2, "question": "……", "gold_answer": "……", "source_doc": "……"}
+{"id": 3, "question": "（最后留 5-10 条语料里【没有】答案的问题，用于测试拒答）", "gold_answer": "应拒答", "source_doc": "无"}

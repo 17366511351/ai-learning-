@@ -1,0 +1,9 @@
+# 密钥与数据
+.env
+data/
+index/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
