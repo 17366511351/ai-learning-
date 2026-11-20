@@ -9,8 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ---- TODO 1: 模型配置 ----
 load_dotenv(BASE_DIR / ".env")
 API_KEY = os.environ.get("DEEPSEEK_API_KEY") # 从环境变量读 DEEPSEEK_API_KEY
-if not API_KEY: raise ValueError(
-"请在 rag-project/.env 中配置 DEEPSEEK_API_KEY，模板见 env.example")
+if not API_KEY:
+    raise ValueError("请在 rag-project/.env 中配置 DEEPSEEK_API_KEY，模板见 env.example")
 BASE_URL = "https://api.deepseek.com"
 CHAT_MODEL = "deepseek-flash"
 
