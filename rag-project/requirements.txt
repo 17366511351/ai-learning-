@@ -3,3 +3,4 @@ chromadb>=0.5
 openai>=1.100.0
 python-dotenv>=1.0.0
 pypdf>=4.0
+python-pptx>=1.0
