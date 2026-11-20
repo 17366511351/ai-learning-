@@ -111,7 +111,8 @@
 **多轮对话的三步（写出代码骨架）：**
 
 ```python
-#1.messages.append({"role": "user", "content": user_input})#2. response = client.chat.completions.create(
+#1.messages.append({"role": "user", "content": user_input})
+#2. response = client.chat.completions.create(
             model=,
             messages=messages,
     )
@@ -153,9 +154,9 @@
 
 ## 附：今日数据记录
 
-- 今天总共调用了 \______ 次 API
-- 累计消耗 token：输入 \______ ／ 输出 \______
-- 最慢的一次响应：\______ 秒
-- 最贵的一次（token 最多）：\______
+- 今天总共调用了 23_次 API
+- 累计消耗 token：输入 1160 ／ 输出 5640
+- 最慢的一次响应：10 秒
+- 最贵的一次（token 最多）：2851
 
 > 这三个数字从今天开始每天记。第 11 周写简历时，"我把首字延迟从 X 降到 Y""成本下降 Z%"这些量化指标，全部来自这里。**事后是补不出来的。**

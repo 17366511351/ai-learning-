@@ -32,14 +32,14 @@ def summarize_history():
     system = messages[0]                              
     dialog = messages[1:]                                                        
     keep = KEEP_RECENT * 2
-    if len(dialog) <= keep + 12:
+    if len(dialog) <= keep + 2:
         return
     old_dialog=dialog[:-keep]
     recent_dialog=dialog[-keep:]
     text = ""
     for m in old_dialog:
-          role = "用户" if m["role"] == "user" else "助手"
-          text += f"{role}: {m['content']}\n"
+        role = "用户" if m["role"] == "user" else "助手"
+        text += f"{role}: {m['content']}\n"
           
     summary_prompt = (
         "请用简洁的中文总结下面这段对话的关键信息，"
@@ -52,10 +52,11 @@ def summarize_history():
         messages=[
             {"role": "system", "content": "你是一个善于总结对话的助手。"},
             {"role": "user", "content": summary_prompt},
-        ],
-    )
+            ],
+         )
         summary = resp.choices[0].message.content
-    except Exception:
+    except Exception as e:
+        print(f"\n[摘要失败，已跳过] {type(e).__name__}: {e}\n")
         return
     
     messages = [
@@ -93,7 +94,7 @@ if __name__ == "__main__":
 
         reply, error = chat(user_input)
         if error:
-            print(f"\n️请求失败：{error}\n") 
+            print(f"\n请求失败：{error}\n")   # ← 修 emoji
         else:
             print(f"\nAI > {reply}")
-            print(f"\n    (历史 {len(messages)} 条)\n")
+            print(f"     (历史 {len(messages)} 条)\n")   # ← 去掉多余 \n，让格式整齐

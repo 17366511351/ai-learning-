@@ -14,7 +14,9 @@ import asyncio
 import os
 import sys
 import time
+from dotenv import load_dotenv
 
+load_dotenv()
 # Windows 控制台默认不是 UTF-8，这句能避免中文乱码
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
