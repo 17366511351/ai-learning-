@@ -13,6 +13,7 @@ TODO(你来做)：
 """
 
 import chromadb
+from app import config
 
 def build_index(chunks: list[dict], embed_model) -> None:
     """TODO: 全量入库。
@@ -22,7 +23,19 @@ def build_index(chunks: list[dict], embed_model) -> None:
     - metadata 里存 doc_id / section / page（后面做过滤要用）
     - 打印总耗时和向量数
     """
-    ...
+    client = chromadb.PersistentClient(path=str(config.INDEX_DIR))
+    try:
+        client.delete_collection("rag_v0")
+    except Exception:
+        pass
+    col = client.create_collection("rag_v0", metadata={"hnsw:space": "cosine"})
+    ids = [c["chunk_id"] for c in chunks]
+    texts = [c["text"] for c in chunks]
+    metadatas = [{"doc_id": c["doc_id"], "section": c["section"],
+                  "page": c["page"], "title": c["title"]} for c in chunks]
+    vectors = embed_model.encode(texts, normalize_embeddings=True, batch_size=64).tolist()
+    col.add(ids=ids, embeddings=vectors, documents=texts, metadatas=metadatas)
+    print(f"写入完成：{col.count()} 条向量 -> {config.INDEX_DIR}")
 
 def search(query: str, embed_model, top_k: int) -> list[dict]:
     """TODO: 查询。
@@ -31,4 +44,14 @@ def search(query: str, embed_model, top_k: int) -> list[dict]:
     - 返回 [{"text":..., "score": 距离转相似度, "metadata":...}, ...]
     - 距离转相似度：Chroma 默认 L2 或 cosine 距离，确认你用的哪种，换算成 0~1
     """
-    ...
+    client = chromadb.PersistentClient(path=str(config.INDEX_DIR))
+    col = client.get_collection("rag_v0")
+    qv = embed_model.encode([query], normalize_embeddings=True).tolist()
+    res = col.query(query_embeddings=qv, n_results=top_k)
+    out = []
+    for text, dist, meta in zip(res["documents"][0],
+                                res["distances"][0],
+                                res["metadatas"][0]):
+        out.append({"text": text, "score": 1 - dist, "metadata": meta})
+    return out
+        
