@@ -1,3 +1,14 @@
+"""RAG V0 端到端验收脚本 —— 一条链验证"解析→切分→建索引→检索"。
+
+这是"可复现实验"：任何人在任何目录跑 `python verify_v0.py`，都能得到同一组数字
+（55 Document → 86 chunk → 86 向量 → 3 个问题的检索分数），用来确认环境/代码没退化。
+
+★ 用 Path(__file__).parent 定位项目根，不写死 D 盘路径 —— 换台机器也能跑。
+"""
+# 离线模式：本地已有 bge 模型缓存，禁止联网检查（详见 app/cli.py 顶部注释）
+import os
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+
 import sys, time
 from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent
